@@ -31,6 +31,13 @@ redis_group     = node['redis']['source']['group']
 
 Array(node['redis']['source']['pkgs']).each { |pkg| package pkg }
 
+current_version = shell_out("redis-server --version|grep -o -E v=[0-9]+.[0-9]+.[0-9]+").stdout.slice(2..-1)
+unless current_version == node['redis']['source']['version']
+  execute "Remove old redis-server #{node['redis']['source']['version']}" do
+    command   "rm -rf #{install_prefix}/bin/redis-server"
+  end
+end
+
 remote_file "#{cache_dir}/#{tar_file}" do
   source    tar_url
   checksum  tar_checksum
