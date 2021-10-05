@@ -17,11 +17,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default['redis']['bind']         = "127.0.0.1"
-default['redis']['port']         = "6379"
-default['redis']['config_path']  = "/etc/redis/redis.conf"
-default['redis']['daemonize']    = "yes"
-default['redis']['timeout']      = "300"
-default['redis']['loglevel']     = "notice"
-default['redis']['password']     = nil
-default['redis']['ulimit']       = 65536
+default['redis']['bind']                = "127.0.0.1"
+default['redis']['port']                = "6379"
+default['redis']['config_path']         = "/etc/redis/redis.conf"
+default['redis']['daemonize']           = "yes"
+default['redis']['timeout']             = "300"
+default['redis']['loglevel']            = "notice"
+default['redis']['password']            = nil
+default['redis']['ulimit']              = 65536
+default['redis']['current_version']     = shell_out("redis-server --version|grep -o -E v=[0-9]+.[0-9]+.[0-9]+").stdout.slice(2..-1)
